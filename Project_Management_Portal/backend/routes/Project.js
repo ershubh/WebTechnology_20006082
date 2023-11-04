@@ -1,0 +1,13 @@
+const express=require('express')
+const router=express.Router()
+const projectController=require("../controllers/Project")
+
+router
+    .get("/",projectController.getAll)
+    .get("/:id",projectController.getById)
+    .get("/professor/:id",projectController.getByProfessorId)
+    .post("/",projectController.create)
+    .patch('/:id',projectController.updateById)
+    .delete("/:id",projectController.deleteById)
+
+module.exports=router
