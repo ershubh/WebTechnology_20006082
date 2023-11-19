@@ -23,7 +23,7 @@ const staffSchema= new Schema({
         type:Boolean,
         required:true
     },
-    moduleTitle:{
+    moduleId:{
         type:String,
     }
 })

@@ -11,7 +11,7 @@ exports.createStaff=async(req,res)=>{
         const existingStaff=await Staff.findOne({staffId:req.body.staffId})
 
         if(existingStaff){
-            return res.status(400).json({"message":"already existing"})
+            return res.status(400).json({"message":"Staff already exists"})
         }
         const hashedPassword=await bcrypt.hash(req.body.password,10)
         req.body.password=hashedPassword
@@ -31,7 +31,7 @@ exports.createStudent=async(req,res)=>{
 
         const existingStudent=await Student.findOne({id:req.body.id})
         if(existingStudent){
-            return res.status(400).json({"message":"already existing"})
+            return res.status(400).json({"message":"Student already exists"})
         }
 
         const hashedPassword=await bcrypt.hash(req.body.password,10)
@@ -52,7 +52,7 @@ exports.loginStaff=async(req,res)=>{
     try {
         const isExisiting=await Staff.findOne({staffId:req.body.staffId})
         if(!isExisiting){
-            return res.status(400).json({"message":"invalid credentails"})
+            return res.status(400).json({"message":"Invalid credentails"})
         }
         if(isExisiting && await bcrypt.compare(req.body.password,isExisiting.password)){
 
@@ -68,6 +68,9 @@ exports.loginStaff=async(req,res)=>{
             })
 
             res.status(200).json(payload)
+        }
+        else{
+            return res.status(400).json({"message":"Invalid credentails"})
         }
 
     } catch (error) {
@@ -93,6 +96,9 @@ exports.loginStudent=async(req,res)=>{
             })
 
             res.status(200).json(payload)
+        }
+        else{
+            return res.status(400).json({"message":"invalid credentails"})
         }
     } catch (error) {
         console.log(error)
